@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Brahms</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{url_for('static', filename='css/styles.css')}}">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0/dist/js/select2.min.js"></script>
+
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Error</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+          {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div id="alert" class="alert" >
+                    <strong>{{ message }}</strong>
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+$(document).ready(function() {
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            $('#exampleModal').modal('show');
+        {% endif %}
+    {% endwith %}
+});
+</script>
+
+</head>
+<body>
+    <div class="container mt-5">
+
+            <strong class="title"><h3><b>Brahm Centre</b></h3> </strong>
+
+
+
+
+
+        <form action="submit-form" method="post" class="needs-validation"  enctype="multipart/form-data">
+             <div class="jumbotron">
+            <div class="col-sm-12 col-md-12 col-lg-12 text-center">
+
+                    <img src="https://i0.wp.com/brahmcentre.com/wp-content/uploads/2021/03/BC-Logo-High-Resolution.png?resize=480%2C456&ssl=1" width="200" height="200">
+            </div>
+        </div>
+              <div class="row bg-primary ">
+            <div class="col-sm-12 col-md-12 col-lg-12">INTERNSHIP FORM</div>
+
+        </div>
+
+
+
+
+        <div class="row bg-secondary">
+            <div class="col-sm-12 col-md-12 col-lg-12" id="header">Particulars of Youth</div>
+        </div>
+             <div class="container text-center">
+            <h7> Thank you for your interest to apply. Please complete this online form with information about yourself. </h7>
+        </div>
+
+         <div class="container text-center">
+            <h7 > Any information collected on this application form will remain strictly confidential and any personal information disclosed for the purpose of obtaining a reference will be treated as confidential and private. </h7>
+
+        </div>
+
+        <div class="container text-center">
+            <h7> * marks mandatory fields</h7>
+
+        </div>
+
+             <div class="form-group">
+                <label for="name" >*Full Name as in NRIC (Birth Cert):</label>
+                <input type="text" class="form-control" id="name" name="name" value="{{ form_data.name if form_data else '' }}"   required>
+            </div>
+
+             <div class="form-group">
+                <label for="nric" >*NRIC Number:</label>
+                <input type="text" class="form-control" id="nric" name="nric" value="{{ form_data.nric if form_data else '' }}"   required>
+            </div>
+
+
+            <div class="form-group">
+                <label for="dob" >*Date of Birth:</label>
+                <input type="date" class="form-control" id="dob" name="dob" value="{{ form_data.dob if form_data else '' }}"   required>
+            </div>
+
+
+            <div class="form-group">
+                <label for="gender">*Gender:</label>
+                <select class="form-control" name="gender" id="gender"  required >
+                   {% for gender in gender_values %}
+                            <option value="{{ gender }}">{{ gender }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="citizenship">*Citizenship:</label>
+                <select class="form-control" name="citizenship" id="citizenship" required>
+                        {% for citizenship in citizenship_values %}
+                            <option value="{{ citizenship }}">{{ citizenship }}</option>
+                        {% endfor %}
+                </select>
+            </div>
+
+              <div class="form-group">
+                  <label for="language" >*Language Spoken:</label>
+
+              </div>
+              <div class="form-group_checkboxes">
+
+
+                    <div id="language" class="custom-multi-select">
+                         {% for language in language_values %}
+                            <label>
+
+                                 <input type="checkbox" name="language" class="checkbox-size" value="{{ language }}">{{ language }}
+
+                            </label>
+                             {% endfor %}
+
+
+
+                    </div>
+
+            </div>
+
+              <div class="form-group">
+                <label for="employment">*Current Education/Employment Status:</label>
+                <select class="form-control" name="employment" id="employment" required>
+                    {% for employment in employment_values %}
+                            <option value="{{ employment }}">{{ employment }}</option>
+
+                      {% endfor %}
+
+                </select>
+
+
+
+
+
+            </div>
+
+             <div class="form-group">
+                <label for="name_of_school" >*Name of School</label>
+                <input type="text" class="form-control" id="name_of_school" name="name_of_school" value="{{ form_data.name_of_school if form_data else '' }}"  required>
+            </div>
+
+              <div class="form-group">
+                <label for="home_no" >Phone Number (Home)</label>
+                <input type="text" class="form-control" id="home_no" name="home_no" value="{{ form_data.home_no if form_data else '' }}" >
+            </div>
+
+            <div class="form-group">
+                <label for="mobile_no" >*Phone Number (Mobile)</label>
+                <input type="text" class="form-control" id="mobile_no" name="mobile_no" value="{{ form_data.mobile_no if form_data else '' }}"  required>
+            </div>
+
+              <div class="form-group">
+                <label for="email" >*Email</label>
+                <input type="text" class="form-control" id="email" name="email" value="{{ form_data.email if form_data else '' }}"  required>
+            </div>
+
+            <div class="form-group">
+                <label for="block_no" >Block/House Number</label>
+                <input type="text" class="form-control" id="block_no" name="block_no" value="{{ form_data.block_no if form_data else '' }}" >
+            </div>
+
+            <div class="form-group">
+                <label for="street_name" >*Street Name</label>
+                <input type="text" class="form-control" id="street_name" name="street_name" value="{{ form_data.street_name if form_data else '' }}"  required>
+            </div>
+
+            <div class="form-group">
+                <label for="unit_no" >Unit Number</label>
+                <input type="text" class="form-control" id="unit_no" name="unit_no" value="{{ form_data.unit_no if form_data else '' }}" >
+            </div>
+
+            <div class="form-group">
+                <label for="postal_code" >*Postal Code</label>
+                <input type="text" class="form-control" id="postal_code" name="postal_code" value="{{ form_data.postal_code if form_data else '' }}"  required>
+            </div>
+
+                <div class="row bg-primary ">
+            <div class="col-sm-12 col-md-12 col-lg-12">Particulars of Parents</div>
+
+        </div>
+
+            <div class="form-group">
+                <label for="father_name" >Name of Father</label>
+                <input type="text" class="form-control" id="father_name" name="father_name" value="{{ form_data.father_name if form_data else '' }}" >
+            </div>
+
+            <div class="form-group">
+                <label for="father_occupation" >Occupation</label>
+                <input type="text" class="form-control" id="father_occupation" name="father_occupation" value="{{ form_data.father_occupation if form_data else '' }}" >
+            </div>
+
+            <div class="form-group">
+                <label for="father_employer" >Name of his employer </label>
+                <input type="text" class="form-control" id="father_employer" name="father_employer" value="{{ form_data.father_employer if form_data else '' }}" >
+            </div>
+
+            <div class="form-group">
+                <label for="mother_name" >Name of Mother</label>
+                <input type="text" class="form-control" id="mother_name" name="mother_name" value="{{ form_data.mother_name if form_data else '' }}" >
+            </div>
+
+             <div class="form-group">
+                <label for="mother_occupation" >Occupation</label>
+                <input type="text" class="form-control" id="mother_occupation" name="mother_occupation" value="{{ form_data.mother_occupation if form_data else '' }}" >
+            </div>
+
+
+            <div class="form-group">
+                <label for="mother_employer" >Name of her employer </label>
+                <input type="text" class="form-control" id="mother_employer" name="mother_employer" value="{{ form_data.mother_employer if form_data else '' }}" >
+            </div>
+
+            <div class="row bg-secondary">
+            <div class="col-sm-12 col-md-12 col-lg-12" >Internship Period</div>
+        </div>
+
+            <div class="form-group">
+                <label for="start_date" >*Preferred start date of internship</label>
+                <input type="date" class="form-control" id="start_date" name="start_date" value="{{ form_data.start_date if form_data else '' }}" required>
+            </div>
+
+            <div class="form-group">
+                <label for="end_date" >*Preferred end date of internship</label>
+                <input type="date" class="form-control" id="end_date" name="end_date" value="{{ form_data.end_date if form_data else '' }}" required>
+            </div>
+
+            <div class="row bg-primary ">
+            <div class="col-sm-12 col-md-12 col-lg-12">Others</div>
+
+        </div>
+
+             <div class="form-group">
+                <label for="relations">*Do you have friends, relatives working or serving on the board at Brahm Centre?</label>
+                <select class="form-control" name="relations" id="relations" required>
+                     <option value="no">No</option>
+                    <option value="yes">Yes</option>
+
+
+                </select>
+            </div>
+
+              <div class="form-group">
+                <label for="criminal">*Do you have a criminal record?</label>
+                <select class="form-control" name="criminal" id="criminal" required>
+                    <option value="no">No</option>
+                    <option value="yes">Yes</option>
+
+
+                </select>
+
+
+            </div>
+
+            <div class="form-group">
+                <label for="dismiss">*Have you ever been dismissed or discharged by an employer?</label>
+                <select class="form-control" name="dismiss" id="dismiss" required>
+                    <option value="no">No</option>
+                    <option value="yes">Yes</option>
+
+
+                </select>
+
+            <div class="form-group">
+                <label for="illness">*Have you been or are you suffering from any physical impairment, disease, or mental illness?</label>
+                <select class="form-control" name="illness" id="illness" required>
+                    <option value="no">No</option>
+                    <option value="yes">Yes</option>
+
+
+                </select>
+
+
+            </div>
+
+
+            </div>
+
+           <div class="form-group">
+                <label for="others" >If you answer "Yes" to any of the above questions, please give details</label>
+                <input type="text" class="form-control" id="others" name="others">
+            </div>
+
+
+            <div class="row bg-secondary">
+            <div class="col-sm-12 col-md-12 col-lg-12" >Attachment of CV</div>
+        </div>
+
+           <div class="form-group">
+              <label for="fileUpload">Upload your CV<b>(10 MB Limit)</b>:</label>
+
+                 <input type="file"  class="form-control_cv" id="fileUpload" name="fileUpload" multiple required>
+           </div>
+
+
+
+             <input type="checkbox" id="terms" name="terms">
+             <label for="terms">I hereby give my consent for any data being collected, stored, retained, retrieved, used and processed by Brahm Centre in accordance with the   <a href="https://brahmcentre.com/brahm-centre-data-protection-policy/" target="_blank">Data Protection Policy</a></label>
+            <br><br>
+
+             <input type="checkbox" id="terms2" name="terms2">
+             <label for="terms2">By submitting this application, I declare that the particulars stated herein and the attached CV are true and correct to the best of my knowledge and belief.</label>
+            <br><br>
+
+            <input type="submit" id="submitBtn" value="Submit" class="btn btn-primary disabled" disabled>
+
+        <!--Script for checkboxes Terms and conditions -->
+        <script>
+            // Get the checkbox and submit button elements
+            var termsCheckbox = document.getElementById('terms');
+            var termsCheckbox2 = document.getElementById('terms2');
+
+            var submitBtn = document.getElementById('submitBtn');
+
+             function checkTerms() {
+                if (termsCheckbox.checked && termsCheckbox2.checked) {
+                    submitBtn.disabled = false;
+                    submitBtn.classList.remove('disabled');
+                } else {
+                    submitBtn.disabled = true;
+                    submitBtn.classList.add('disabled');
+                }
+            }
+
+            // Add event listeners to the checkboxes
+            termsCheckbox.addEventListener('change', checkTerms);
+            termsCheckbox2.addEventListener('change', checkTerms);
+        </script>
+
+        </form>
+
+
+    </div>
+</body>
+
+</html>
